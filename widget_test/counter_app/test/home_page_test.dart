@@ -21,7 +21,7 @@ void main() {
       expect(ctr2, findsNothing);
 
       // trying to simulate user action
-
+ 
       final incrementBtn = find.byKey(const Key('increment_counter'));
       await tester.tap(incrementBtn);
 

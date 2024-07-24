@@ -37,8 +37,6 @@ In Flutter golden tests, several types of images are generated to help you valid
 
 These images help ensure that your UI remains consistent and visually correct across different versions of your app.
 
-Certainly! Let's expand on the details of using the `logging` package for enhanced logging and the `golden_toolkit` package for managing golden tests in Flutter.
-
 ### **Golden Testing with `golden_toolkit`**
 
 Golden tests ensure that your app's UI remains consistent by comparing the rendered output to a baseline image (the "golden" image). The `golden_toolkit` package offers a streamlined way to manage these tests.

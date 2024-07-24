@@ -46,7 +46,7 @@ First, add `golden_toolkit` to your `pubspec.yaml`:
 
 ```yaml
 dev_dependencies:
-  golden_toolkit: ^0.8.0
+  golden_toolkit: ^0.15.0
 ```
 
 
@@ -127,7 +127,7 @@ To get started with logging, add the `logging` package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  logging: ^1.0.2
+  logging: ^1.2.0
 ```
 
 #### **2. Configuring the Logger**

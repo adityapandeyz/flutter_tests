@@ -36,3 +36,127 @@ In Flutter golden tests, several types of images are generated to help you valid
 - **`counter_maskedDiff.png`**: A diff image with a mask applied to highlight differences in a focused manner, often used to emphasize intentional changes.
 
 These images help ensure that your UI remains consistent and visually correct across different versions of your app.
+
+Certainly! Let's expand on the details of using the `logging` package for enhanced logging and the `golden_toolkit` package for managing golden tests in Flutter.
+
+### **Golden Testing with `golden_toolkit`**
+
+Golden tests ensure that your app's UI remains consistent by comparing the rendered output to a baseline image (the "golden" image). The `golden_toolkit` package offers a streamlined way to manage these tests.
+
+#### **1. Adding `golden_toolkit` Package**
+First, add `golden_toolkit` to your `pubspec.yaml`:
+
+```yaml
+dev_dependencies:
+  golden_toolkit: ^0.8.0
+```
+
+
+In Flutter, the default command to generate or update a golden image is simply running the `flutter test` command. However, to specifically manage golden files, you can use the `--update-goldens` flag. This flag tells the test runner to update the golden images instead of comparing against the existing ones.
+
+Here’s the command:
+
+```bash
+flutter test --update-goldens
+```
+
+### Steps to Generate or Update Golden Images
+
+1. **Add or Modify a Golden Test**: Write or update a test using the `golden_toolkit` package or any other golden testing method.
+
+2. **Run the Test with the Update Flag**: Use the `flutter test --update-goldens` command to generate new golden images or update existing ones based on the current widget rendering.
+
+3. **Review and Commit**: After running the tests with `--update-goldens`, review the generated or updated golden images to ensure they match the expected design. Once confirmed, commit these images to your version control system.
+
+### Example Usage
+
+Suppose you have a golden test in your test file like this:
+
+```dart
+testGoldens('example golden test', (tester) async {
+  final widget = Container(
+    color: Colors.blue,
+    width: 100,
+    height: 100,
+  );
+
+  await tester.pumpWidgetBuilder(widget);
+  await screenMatchesGolden(tester, 'example_golden_test');
+});
+```
+
+Run the following command to generate or update the golden image:
+
+```bash
+flutter test --update-goldens
+```
+
+This command will generate a new image if one doesn't exist or update the existing golden image with the current rendering of the widget.
+
+#### **2. Configuring Golden Tests**
+In your test file, set up the `GoldenToolkit` and write a golden test:
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:golden_toolkit/golden_toolkit.dart';
+
+void main() {
+  testGoldens('example golden test', (tester) async {
+    final widget = Container(
+      color: Colors.blue,
+      width: 100,
+      height: 100,
+    );
+
+    await tester.pumpWidgetBuilder(widget);
+
+    await screenMatchesGolden(tester, 'example_golden_test');
+  });
+}
+```
+
+#### **3. Running Golden Tests**
+Golden tests can be run using the `flutter test` command. The `screenMatchesGolden` function captures the current state of the widget and compares it to the baseline image. If there are differences, the test will fail, and you can review the diff images to identify the changes.
+
+#### **4. Managing Golden Files**
+When you first create a golden test, you'll need to approve the generated baseline images. These images are stored in your project and should be kept under version control. If the UI changes intentionally, you can update the golden images to reflect the new design.
+
+
+### **Logging in Flutter Tests with `logging` Package**
+
+#### **1. Setting Up the `logging` Package**
+To get started with logging, add the `logging` package to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  logging: ^1.0.2
+```
+
+#### **2. Configuring the Logger**
+Create and configure a logger in your test files:
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:logging/logging.dart';
+
+void main() {
+  // Create a logger
+  Logger logger = Logger('TestLogger');
+
+  // Set the root log level to ALL
+  Logger.root.level = Level.ALL;
+
+  // Listen to the logger's output
+  Logger.root.onRecord.listen((record) {
+    print('${record.level.name}: ${record.time}: ${record.message}');
+  });
+
+  test('example test with logging', () {
+    logger.info('This is an info log message');
+    expect(1 + 1, equals(2));
+  });
+}
+```
+
+#### **3. Using the Logger**
+You can use different logging levels (`info`, `warning`, `severe`, etc.) to categorize your log messages. This helps in filtering logs based on the severity level, making it easier to debug specific issues.

@@ -58,6 +58,35 @@ Here’s the command:
 flutter test --update-goldens
 ```
 
+#### **2. Configuring Golden Tests**
+In your test file, set up the `GoldenToolkit` and write a golden test:
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:golden_toolkit/golden_toolkit.dart';
+
+void main() {
+  testGoldens('example golden test', (tester) async {
+    final widget = Container(
+      color: Colors.blue,
+      width: 100,
+      height: 100,
+    );
+
+    await tester.pumpWidgetBuilder(widget);
+
+    await screenMatchesGolden(tester, 'example_golden_test');
+  });
+}
+```
+
+#### **3. Running Golden Tests**
+Golden tests can be run using the `flutter test` command. The `screenMatchesGolden` function captures the current state of the widget and compares it to the baseline image. If there are differences, the test will fail, and you can review the diff images to identify the changes.
+
+#### **4. Managing Golden Files**
+When you first create a golden test, you'll need to approve the generated baseline images. These images are stored in your project and should be kept under version control. If the UI changes intentionally, you can update the golden images to reflect the new design.
+
+
 ### Steps to Generate or Update Golden Images
 
 1. **Add or Modify a Golden Test**: Write or update a test using the `golden_toolkit` package or any other golden testing method.
@@ -90,34 +119,6 @@ flutter test --update-goldens
 ```
 
 This command will generate a new image if one doesn't exist or update the existing golden image with the current rendering of the widget.
-
-#### **2. Configuring Golden Tests**
-In your test file, set up the `GoldenToolkit` and write a golden test:
-
-```dart
-import 'package:flutter_test/flutter_test.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
-
-void main() {
-  testGoldens('example golden test', (tester) async {
-    final widget = Container(
-      color: Colors.blue,
-      width: 100,
-      height: 100,
-    );
-
-    await tester.pumpWidgetBuilder(widget);
-
-    await screenMatchesGolden(tester, 'example_golden_test');
-  });
-}
-```
-
-#### **3. Running Golden Tests**
-Golden tests can be run using the `flutter test` command. The `screenMatchesGolden` function captures the current state of the widget and compares it to the baseline image. If there are differences, the test will fail, and you can review the diff images to identify the changes.
-
-#### **4. Managing Golden Files**
-When you first create a golden test, you'll need to approve the generated baseline images. These images are stored in your project and should be kept under version control. If the UI changes intentionally, you can update the golden images to reflect the new design.
 
 
 ### **Logging in Flutter Tests with `logging` Package**

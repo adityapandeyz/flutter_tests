@@ -4,7 +4,7 @@ import 'package:counter_riverpod_test/main.dart';
 
 void main() {
   group(
-    'Counter Provider Test',
+    'Counter Provider Unit Test',
     () {
       test(
         'Counter Increment',

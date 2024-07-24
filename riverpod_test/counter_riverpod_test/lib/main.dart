@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final counterProvider = StateProvider<int>((ref) {
-  return 0;
-});
+final counterProvider = StateNotifierProvider<Counter, int>(
+  (ref) => Counter(),
+);
 
 void main() {
   runApp(
@@ -51,10 +51,16 @@ class HomePage extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(counterProvider.notifier).state++;
+          final counter = ref.read(counterProvider.notifier);
+          counter.increment();
         },
         child: const Icon(Icons.add),
       ),
     );
   }
+}
+
+class Counter extends StateNotifier<int> {
+  Counter() : super(0);
+  void increment() => state++;
 }
